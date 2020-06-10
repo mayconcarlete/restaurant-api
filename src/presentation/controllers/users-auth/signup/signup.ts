@@ -10,9 +10,12 @@ export class SignUpController {
           return badRequest(new MissingParamError(field))
         }
       }
-      const { password } = httpRequest.body
+      const { password, passwordConfirmation } = httpRequest.body
       if (password.length < 6) {
         return badRequest(new InvalidParamError('password must be longer then 5 characters'))
+      }
+      if (password !== passwordConfirmation) {
+        return badRequest(new InvalidParamError('Password and passwordConfimation are different'))
       }
       return {
         statusCode: 200,
