@@ -73,4 +73,18 @@ describe('SignUpController Tests', () => {
     expect(response.statusCode).toBe(400)
     expect(response.body).toEqual(new InvalidParamError('password must be longer then 5 characters'))
   })
+  test('Ensure to return 400 if password and passwordConfirmation are different', () => {
+    const sut = makeSut()
+    const httpRequest: IHttpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_mail@mail.com',
+        password: 'any_password',
+        passwordConfirmation: 'invalid_password'
+      }
+    }
+    const response = sut.handle(httpRequest)
+    expect(response.statusCode).toBe(400)
+    expect(response.body).toEqual(new InvalidParamError('Password and passwordConfimation are different'))
+  })
 })
