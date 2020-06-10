@@ -1,5 +1,6 @@
 import { SignUpController } from './signup'
 import { IHttpRequest, MissingParamError } from './signup-protocols'
+import { InvalidParamError } from '../../../errors'
 const makeSut = (): SignUpController => {
   const signUpController = new SignUpController()
   return signUpController
@@ -57,5 +58,19 @@ describe('SignUpController Tests', () => {
     const response = sut.handle(httpRequest)
     expect(response.statusCode).toBe(400)
     expect(response.body).toEqual(new MissingParamError('passwordConfirmation'))
+  })
+  test('Ensure return 400 if password is shorter then 6 length', () => {
+    const sut = makeSut()
+    const httpRequest: IHttpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_mail@mail.com',
+        password: '123',
+        passwordConfirmation: 'any_password'
+      }
+    }
+    const response = sut.handle(httpRequest)
+    expect(response.statusCode).toBe(400)
+    expect(response.body).toEqual(new InvalidParamError('password must be longer then 5 characters'))
   })
 })
