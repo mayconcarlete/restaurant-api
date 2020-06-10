@@ -13,3 +13,10 @@ export const serverError = (): IHttpResponse => {
     body: 'Server Error'
   }
 }
+
+export const ok = (data): IHttpResponse => {
+  return {
+    statusCode: 200,
+    body: data
+  }
+}
