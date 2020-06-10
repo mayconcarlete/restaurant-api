@@ -1,13 +1,12 @@
-import { IHttpRequest, IHttpResponse, badRequest, serverError } from './signup-protocols'
-import { InvalidParamError } from '../../../errors/invalid-param-error'
+import { IHttpRequest, IHttpResponse, badRequest, serverError, MissingParamError } from './signup-protocols'
 
 export class SignUpController {
   handle (httpRequest: IHttpRequest): IHttpResponse {
     try {
       const requiredFields = ['name', 'email', 'password', 'passwordConfirmation']
       for (const field of requiredFields) {
-        if (!httpRequest[field]) {
-          return badRequest(new InvalidParamError(field))
+        if (!httpRequest.body[field]) {
+          return badRequest(new MissingParamError(field))
         }
       }
     } catch (error) {
