@@ -1,7 +1,5 @@
 import { SignUpController } from './signup'
-import { IHttpRequest, MissingParamError } from './signup-protocols'
-import { InvalidParamError } from '../../../errors'
-import { IEmailValidation } from '../../../protocols'
+import { IHttpRequest, MissingParamError, InvalidParamError, IEmailValidation } from './signup-protocols'
 import { EmailValidation } from '../../../../validation/email-validation'
 
 const makeEmailValidationStub = (): IEmailValidation => {
